@@ -1,32 +1,86 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PrevSession from "../components/PrevSession";
+import { getAuth } from "firebase/auth";
+import { useParams } from "react-router-dom";
 
 const Chat = () => {
   const [input, setInput] = useState("");
+  const [sessionId, setSessionId] = useState("650b381d25089f056a103a78")
   const [messages, setMessages] = useState([
     { text: "Hello, how can I assist you?", sender: "bot" },
   ]);
 
+  let { userId } = useParams();
+  console.log(userId)
+
+  let latestSessionId;
+
+
   const handleSubmit = async (e) => {
+
     e.preventDefault();
 
-    if (!input) return;
-    setMessages([...messages, { text: input, isUser: true }]);
-    setInput("");
-
     try {
-      // Send the user's message to the backend for processing
-      const response = await axios.post("/api/gpt", { input });
-
-      // Add the AI's response to the chat
-      setMessages([...messages, { text: response.data, isUser: false }]);
-    } catch (error) {
-      console.error("Error sending message:", error);
+      const ques = {
+        'userId': userId,
+        'question': input
+      }
+      console.log("Session-Id: ", sessionId)
+      const res = await axios.put(`http://localhost:8000/api/session/${sessionId}`, ques)
+      console.log(res)
+    }
+    catch (err) {
+      console.log(err)
     }
   };
 
+  const getSessionQuestionAnswers=async()=>{
+    try{
+      const res=await axios.get(`http://localhost:8000/api/session/${sessionId}`)
+      console.log("current session: ",res.data.chats)
+      setMessages(res.data.chats)
+    }
+    catch(err){
+      console.log(err)
+    }
+  }
+
+  const createNewSession = async () => {
+    const newSession = {
+      "userId": getAuth().currentUser.uid,
+      "sessionName": "New session"
+    }
+
+    const res = await axios.post("http://localhost:8000/api/session", newSession)
+    console.log(res)
+  }
+
+
+  const getUserSession = async () => {
+    try {
+      const res = await axios.get(`http://localhost:8000/api/session/user/${userId}`)
+      latestSessionId = res.data[res.data.length - 1]._id
+      // setSessionId(latestSessionId)
+      // console.log("Session-Id: ",latestSessionId)
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
+
   useEffect(() => {
+    // creating a new chat session
+    createNewSession()
+    getUserSession()
+    getSessionQuestionAnswers()
+
+
+  }, [])
+
+  useEffect(() => {
+
     // Scroll to the bottom of the chat when new messages are added
     const chatContainer = document.getElementById("chat-container");
     chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -35,7 +89,7 @@ const Chat = () => {
   return (
     <div className="flex justify-center bg-bg-light items-start h-screen">
       <div className=" bg-bg-light  p-4 w-1/4 ">
-            <PrevSession sessionname={"session1"}/>
+        <PrevSession sessionname={"session1"} />
       </div>
       <div className=" bg-bg-light p-4 w-3/4">
         <div
@@ -45,16 +99,17 @@ const Chat = () => {
           {messages.map((message, index) => (
             <div
               key={index}
-              className={`mb-2 ${message.isUser ? "text-right" : "text-left"}`}
+              className={`flex flex-col mb-2`}
             >
               <div
-                className={`py-2 px-3 rounded-lg inline-block break-words ${
-                  message.isUser
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-300 text-gray-800"
-                }`}
+                className={`py-2 px-3 rounded-lg inline-block break-words text-right`}
               >
-                {message.text}
+                {message.userQuestion}
+              </div>
+              <div
+                className={`py-2 px-3 rounded-lg  inline-block break-words text-left`}
+              >
+                {message.reply}
               </div>
             </div>
           ))}
