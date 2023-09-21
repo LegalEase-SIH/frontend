@@ -17,7 +17,7 @@ export default function SignIn() {
              getAuth().currentUser.getIdToken().then(function(idToken){
                console.log(idToken)
     
-               navigate("/")
+               navigate("/home")
              })
         }).catch((error)=>{
             console.log(error);
@@ -39,8 +39,11 @@ export default function SignIn() {
     
 
     return (
-
-        <button onClick={signIn}>Sign in</button>
+        <div className="flex flex-col space-y-9 justify-center h-screen items-center bg-bg-light">
+            <h1 className="text-2xl font-serif ">Welcome to LegalEase. Sign in to get into the world of law</h1>
+            <button onClick={signIn} className="bg-orange-400 w-1/6 h-16 border border-slate-800 p-4 rounded-2xl font-semibold text-2xl font-serif">Sign in</button>
+        </div>
+        
     )
     
 }

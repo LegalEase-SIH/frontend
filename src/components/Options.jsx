@@ -17,21 +17,21 @@ export default function Options() {
     <>
 
       <div className="flex justify-between pr-28 pl-28 pb-10 bg-bg-light">
-        <a href="/upload">
+      <Link to={`/upload`}>
         <div className="border-slate-400 p-4 rounded-2xl border-4 flex justify-center items-center space-x-4">
           <BsUpload size={30}/>
-          <h1 className="text-2xl font-bold">Upload petition</h1>
-        </div></a>
-        <a href="/gawareness">
+          <h1 className="text-2xl font-bold font-serif">Upload petition</h1>
+        </div></Link>
+        <Link to={`/gawareness`}>
         <div className="border-slate-400 p-4 rounded-2xl border-4 flex justify-center items-center space-x-4">
           <GiAwareness size={30}/>
-          <h1 className="text-2xl font-bold">General Awareness</h1>
-        </div></a>
+          <h1 className="text-2xl font-bold font-serif">General Awareness</h1>
+        </div></Link>
         {/* <a href="/chat"> */}
         <Link to={`/chat/${userId}`}>
         <div className="border-slate-400 p-4 rounded-2xl border-4 flex justify-center items-center space-x-4">
           <BsChatDots size={30}/>
-          <h1 className="text-2xl font-bold"> New Conversation</h1>
+          <h1 className="text-2xl font-bold font-serif"> New Conversation</h1>
         </div>
         </Link>
         {/* </a> */}
@@ -40,8 +40,8 @@ export default function Options() {
         <img src={icon3} alt="icon3" width={900} height={900} />
 
         <div className=" bg-bg-box rounded-xl w-2/5 p-4">
-          <h1 className="text-xl font-bold">About us</h1>
-          <h2>
+          <h1 className="text-xl font-bold font-serif">About us</h1>
+          <h2 className="font-serif">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
             id accusantium voluptatem quibusdam hic necessitatibus sequi ipsam.
             Quo aperiam tenetur maiores exercitationem et ea assumenda excepturi
