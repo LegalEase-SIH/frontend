@@ -82,7 +82,8 @@ const Chat = () => {
           }
         }
       );
-      // console.log("current session: ", res.data.chats);
+       console.log("current session: ", res.data.chats);
+       console.log("current chat time: ",typeof(res.data.chats[0].time))
       setMessages(res.data.chats);
     } catch (err) {
       console.log(err);
@@ -218,7 +219,7 @@ const Chat = () => {
                       className="w-6 h-6 rounded-lg "
                     />
                   </div>
-                  <h1 className="flex justify-end h-4 text-xs">{showTime}</h1>
+                  <h1 className="flex justify-end h-4 text-xs">{new Date(message.time).getHours()+":" +new Date(message.time).getMinutes()}</h1>
                 </div>
 
                 <div
