@@ -3,10 +3,11 @@ import axios from "axios";
 import PrevSession from "../components/PrevSession";
 import { getAuth } from "firebase/auth";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Chat = () => {
   const [input, setInput] = useState("");
-  const [sessionId, setSessionId] = useState("");
+  // const [sessionId, setSessionId] = useState("");
   const [messages, setMessages] = useState([
     { text: "Hello, how can I assist you?", sender: "bot" },
   ]);
@@ -21,33 +22,36 @@ const Chat = () => {
 
   // let latestSessionId;
   const displayname = localStorage.getItem("name");
-  console.log("Name of the user: ", displayname);
-
   const userPhotoUrl = localStorage.getItem("photoUrl");
-  console.log("User photo Url: ", userPhotoUrl);
+  let sessionId=localStorage.getItem("sessionId")
+
+  console.log(sessionId)
+
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    sessionId=localStorage.getItem("sessionId")
 
     try {
       const ques = {
         userId: userId,
         question: input,
       };
-      console.log("Session-Id: ", sessionId);
+      // console.log("Session-Id: ", sessionId);
 
       // putting the user question into the database
       const res = await axios.put(
         `http://localhost:8000/api/session/${sessionId}`,
         ques
       );
-      console.log(res);
+      // console.log(res);
 
       // fetching the user chats from the database
       const res1 = await axios.get(
         `http://localhost:8000/api/session/${sessionId}`
       );
-      console.log("current session: ", res1.data.chats);
+      // console.log("current session: ", res1.data.chats);
       setMessages(res1.data.chats);
       setInput("");
     } catch (err) {
@@ -56,11 +60,12 @@ const Chat = () => {
   };
 
   const getSessionQuestionAnswers = async () => {
+    // let sessionId=localStorage.getItem('sessionId')
     try {
       const res = await axios.get(
         `http://localhost:8000/api/session/${sessionId}`
       );
-      console.log("current session: ", res.data.chats);
+      // console.log("current session: ", res.data.chats);
       setMessages(res.data.chats);
     } catch (err) {
       console.log(err);
@@ -70,14 +75,15 @@ const Chat = () => {
   const createNewSession = async () => {
     const newSession = {
       userId: getAuth().currentUser.uid,
-      sessionName: "New session",
+      sessionName: "New session created",
     };
 
     const res = await axios.post(
       "http://localhost:8000/api/session",
       newSession
     );
-    console.log(res);
+    // console.log("Create new session clicked")
+    // console.log(res);
   };
 
   const getUserSession = async () => {
@@ -85,21 +91,38 @@ const Chat = () => {
       const res = await axios.get(
         `http://localhost:8000/api/session/user/${userId}`
       );
+      // console.log("Length of user sessions: ",res.data.length)
       // console.log("User sessions: ",res.data.slice(-6))
       const prevUserSessions = res.data.slice(-6);
+      prevUserSessions.reverse()
       setUserSessions(prevUserSessions);
-      console.log("userSessions: ", userSessions);
+      // console.log("userSessions: ", userSessions);
       const latestSessionId = res.data[res.data.length - 1]._id;
-      setSessionId(latestSessionId);
+      // setSessionId(latestSessionId);
+      localStorage.setItem('sessionId',latestSessionId)
       // console.log("Session-Id: ",latestSessionId)
     } catch (err) {
       console.log(err);
     }
   };
 
+  const handleSessionClick=async(sessionId)=>{
+    localStorage.setItem('sessionId',sessionId)
+   
+    try {
+      const res = await axios.get(
+        `http://localhost:8000/api/session/${sessionId}`
+      );
+      // console.log("current session: ", res.data.chats);
+      setMessages(res.data.chats);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     // creating a new chat session
-    createNewSession();
+   // createNewSession();
     getUserSession();
     getSessionQuestionAnswers();
   }, []);
@@ -114,11 +137,11 @@ const Chat = () => {
     <div className="flex justify-center bg-bg-light  h-screen">
       <div className="bg-bg-font">
         <div className="flex flex-col p-8">
-          <button className="border border-slate-400 p-2 text-white rounded-lg">New Chat</button>
+          <button className="border border-slate-400 p-2 text-white rounded-lg" onClick={createNewSession}>New Chat</button>
           {userSessions.map((userSession, index) => (
-            <div className="p-4">
+            <button onClick={()=>handleSessionClick(userSession._id)}>
               <PrevSession sessionname={userSession.sessionName} />
-            </div>
+            </button>
           ))}
         </div>
       </div>
