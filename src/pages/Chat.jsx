@@ -10,11 +10,17 @@ const Chat = () => {
   const [messages, setMessages] = useState([
     { text: "Hello, how can I assist you?", sender: "bot" },
   ]);
-
+  
   let { userId } = useParams();
-  console.log(userId)
+  
+  // let latestSessionId;
+  const displayname=localStorage.getItem('name')
+  console.log("Name of the user: ",displayname)
 
-  let latestSessionId;
+  const userPhotoUrl=localStorage.getItem('photoUrl')
+  console.log("User photo Url: ",userPhotoUrl)
+
+
 
 
   const handleSubmit = async (e) => {
@@ -60,7 +66,8 @@ const Chat = () => {
   const getUserSession = async () => {
     try {
       const res = await axios.get(`http://localhost:8000/api/session/user/${userId}`)
-      latestSessionId = res.data[res.data.length - 1]._id
+      
+      const latestSessionId = res.data[res.data.length - 1]._id
       // setSessionId(latestSessionId)
       // console.log("Session-Id: ",latestSessionId)
     }
