@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 const Chat = () => {
   const [input, setInput] = useState("");
-  const [sessionId, setSessionId] = useState("650b381d25089f056a103a78")
+  const [sessionId, setSessionId] = useState("")
   const [messages, setMessages] = useState([
     { text: "Hello, how can I assist you?", sender: "bot" },
   ]);
@@ -33,8 +33,16 @@ const Chat = () => {
         'question': input
       }
       console.log("Session-Id: ", sessionId)
+
+      // putting the user question into the database 
       const res = await axios.put(`http://localhost:8000/api/session/${sessionId}`, ques)
       console.log(res)
+
+      // fetching the user chats from the database
+      const res1=await axios.get(`http://localhost:8000/api/session/${sessionId}`)
+      console.log("current session: ",res1.data.chats)
+      setMessages(res1.data.chats)
+      
     }
     catch (err) {
       console.log(err)
@@ -68,7 +76,7 @@ const Chat = () => {
       const res = await axios.get(`http://localhost:8000/api/session/user/${userId}`)
       
       const latestSessionId = res.data[res.data.length - 1]._id
-      // setSessionId(latestSessionId)
+       setSessionId(latestSessionId)
       // console.log("Session-Id: ",latestSessionId)
     }
     catch (err) {
