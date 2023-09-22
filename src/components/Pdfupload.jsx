@@ -3,9 +3,10 @@ import { getAuth } from 'firebase/auth';
 import React, { useState } from 'react';
 
 import { BsFillCloudArrowUpFill } from "react-icons/bs";
+import Loading from '../pages/Loading';
 function Pdfupload({setPetitionId}) {
     const [selectedPdf, setSelectedPdf] = useState(null);
-
+    const [isLoading,setIsLoading]=useState(false);
     const handleFileChange = (e) => {
       const file = e.target.files[0];
       setSelectedPdf(file);
@@ -13,6 +14,7 @@ function Pdfupload({setPetitionId}) {
 
     const handleUpload = async () => {
       const userId = getAuth().currentUser.uid;
+      setIsLoading(true);
       try {
         const formData = new FormData();
         formData.append("file", selectedPdf);
@@ -29,10 +31,12 @@ function Pdfupload({setPetitionId}) {
 
         setPetitionId(petitionId);
 
-        alert("File uploaded successfully")
+        // alert("File uploaded successfully")
       } catch(err) {
         console.log(err);
         alert("Something went wrong")
+      }finally{
+        setIsLoading(false);
       }
     }
   
@@ -47,6 +51,7 @@ function Pdfupload({setPetitionId}) {
         />
         
         <button className='flex items-center border space-x-2  font-medium border-slate-500 p-3 rounded-lg' onClick={() => handleUpload() }><BsFillCloudArrowUpFill/><div>Upload PDF</div></button>
+        {isLoading && <div><Loading/></div>} 
         {selectedPdf && (
           <div>
             <h2 className="text-xl font-semibold mb-2 font-serif">Selected PDF:</h2>
