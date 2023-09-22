@@ -4,7 +4,7 @@ import PrevSession from "../components/PrevSession";
 import { getAuth } from "firebase/auth";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { translate } from '@vitalets/google-translate-api';
+
 
 const Chat = () => {
   const [input, setInput] = useState("");
