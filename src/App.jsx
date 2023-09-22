@@ -9,6 +9,7 @@ import Successrate from "./pages/Successrate";
 import Upload from "./pages/Upload";
 import {BrowserRouter,Routes,Route} from "react-router-dom"
 import Gawareness from "./pages/Gawareness"
+import PreviousPetitions from "./pages/PreviousPetitions";
 export default function App() {
   return (
     <>
@@ -20,7 +21,7 @@ export default function App() {
         <Route exact path="/" element={<SignIn/>} />
         <Route exact path="/upload" element={<Upload/>} />
         <Route exact path="/gawareness" element={<Gawareness/>} />
-
+        <Route exact path="/previouspetitions" element={<PreviousPetitions/>} />
 
 
 
