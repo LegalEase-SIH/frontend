@@ -14,8 +14,7 @@ export default function App() {
   return (
     <>
       <Header />
-      <div className="flex justify-center">
-        <div className="flex h-screen justify-between flex-col w-1/2">
+        <div className="flex h-screen justify-between flex-col">
           <BrowserRouter>
             <Routes>
               <Route exact path="/" element={<SignIn />} />
@@ -33,7 +32,6 @@ export default function App() {
           </BrowserRouter>
         </div>
 
-      </div>
       <Footer />
     </>
   );
