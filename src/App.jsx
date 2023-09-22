@@ -7,35 +7,34 @@ import Neroutput from "./pages/Neroutput";
 import SignIn from "./pages/SignIn";
 import Successrate from "./pages/Successrate";
 import Upload from "./pages/Upload";
-import {BrowserRouter,Routes,Route} from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Gawareness from "./pages/Gawareness"
 import PreviousPetitions from "./pages/PreviousPetitions";
 export default function App() {
   return (
     <>
-    
-      <div className="flex h-screen justify-between flex-col">
-        <Header />
-        <BrowserRouter>
-        <Routes>
-        <Route exact path="/" element={<SignIn/>} />
-        <Route exact path="/upload" element={<Upload/>} />
-        <Route exact path="/gawareness" element={<Gawareness/>} />
-        <Route exact path="/previouspetitions" element={<PreviousPetitions/>} />
+      <Header />
+      <div className="flex justify-center">
+        <div className="flex h-screen justify-between flex-col w-1/2">
+          <BrowserRouter>
+            <Routes>
+              <Route exact path="/" element={<SignIn />} />
+              <Route exact path="/upload" element={<Upload />} />
+              <Route exact path="/search" element={<Gawareness />} />
+              <Route exact path="/previouspetitions" element={<PreviousPetitions />} />
 
+              <Route exact path="/ner" element={<Neroutput />} />
+              <Route exact path="/successrate" element={<Successrate />} />
+              <Route exact path="/chat/:userId" element={<Chat />} />
+              {/* <Login/> */}
+              <Route exact path="/home" element={<Home />} />
+              {/* <SignIn/> */}
+            </Routes>
+          </BrowserRouter>
+        </div>
 
-
-        <Route exact path="/ner" element={<Neroutput/>}/>
-        <Route exact path="/successrate" element={<Successrate/>}/>
-        <Route exact path="/chat/:userId" element={<Chat/>} />
-        {/* <Login/> */}
-        <Route exact path="/home" element={<Home/>}/>
-        {/* <SignIn/> */}
-        </Routes>
-        </BrowserRouter>
-        <Footer />
       </div>
-     
+      <Footer />
     </>
   );
 }
