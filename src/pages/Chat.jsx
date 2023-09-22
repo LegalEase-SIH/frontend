@@ -30,36 +30,49 @@ const Chat = () => {
   let sessionId = localStorage.getItem("sessionId");
 
   console.log(sessionId);
+ 
+  const languages = [
+    { code: 'en', name: 'English' },
+    { code: 'hi', name: 'Hindi' },
+    // Add more languages as needed
+  ];
 
-  const options = {
-    method: 'POST',
-    url: 'https://microsoft-translator-text.p.rapidapi.com/translate',
-    params: {
-      'to[0]': 'hi',
-      'api-version': '3.0',
-      profanityAction: 'NoAction',
-      textType: 'plain'
-    },
-    headers: {
-      'content-type': 'application/json',
-      'X-RapidAPI-Key': 'b04d6f82bfmsha28287883c823d7p145b2bjsn47ca82720e93',
-      'X-RapidAPI-Host': 'microsoft-translator-text.p.rapidapi.com'
-    },
-    data: [
-      {
-        Text: 'I would really like to drive your car around the block a few times.'
-      }
-    ]
+  const [selectedLanguage, setSelectedLanguage] = useState('en');
+  const handleLanguageChange = (event) => {
+    setSelectedLanguage(event.target.value);
   };
+  console.log("Selected language: ",selectedLanguage)
+
+
+  // const options = {
+  //   method: 'POST',
+  //   url: 'https://microsoft-translator-text.p.rapidapi.com/translate',
+  //   params: {
+  //     'to[0]':selectedLanguage,
+  //     'api-version': '3.0',
+  //     profanityAction: 'NoAction',
+  //     textType: 'plain'
+  //   },
+  //   headers: {
+  //     'content-type': 'application/json',
+  //     'X-RapidAPI-Key': 'b04d6f82bfmsha28287883c823d7p145b2bjsn47ca82720e93',
+  //     'X-RapidAPI-Host': 'microsoft-translator-text.p.rapidapi.com'
+  //   },
+  //   data: [
+  //     {
+  //       Text: 'I would really like to drive your car around the block a few times.'
+  //     }
+  //   ]
+  // };
   
- const translateData=async()=>{
-  try {
-    const response = await axios.request(options);
-    console.log("Translator response: ",response.data);
-  } catch (error) {
-    console.error(error);
-  }
- }
+//  const translateData=async()=>{
+//   try {
+//     const response = await axios.request(options);
+//      console.log("Translator response: ",response.data[0].translations[0].text);
+//   } catch (error) {
+//     console.error(error);
+//   }
+//  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -100,6 +113,63 @@ const Chat = () => {
       console.log(err);
     }
   };
+
+  // const getSessionQuestionAnswers1 = async () => {
+  //   // let sessionId=localStorage.getItem('sessionId')
+  //   try {
+  //     const res = await axios.get(
+  //       `http://localhost:8000/api/session/${sessionId}`,
+  //       {
+  //         headers:{
+  //           "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+  //         }
+  //       }
+  //     );
+  //      console.log("current session: ", res.data.chats);
+  //      console.log("reply: ", res.data.chats[0].reply)
+  //      console.log("current chat time: ",typeof(res.data.chats[0].time))
+
+  //      const final = res.data.chats.map(async (item, index) => {
+  //       const options = {
+  //         method: 'POST',
+  //         url: 'https://microsoft-translator-text.p.rapidapi.com/translate',
+  //         params: {
+  //           'to[0]':selectedLanguage,
+  //           'api-version': '3.0',
+  //           profanityAction: 'NoAction',
+  //           textType: 'plain'
+  //         },
+  //         headers: {
+  //           'content-type': 'application/json',
+  //           'X-RapidAPI-Key': 'b04d6f82bfmsha28287883c823d7p145b2bjsn47ca82720e93',
+  //           'X-RapidAPI-Host': 'microsoft-translator-text.p.rapidapi.com'
+  //         },
+  //         data: [
+  //           {
+  //             Text: item.reply
+  //           }
+  //         ]
+  //       };
+  //       const response = await axios.request(options);
+  //       const retObj = {
+  //         userQuestion: item.userQuestion,
+  //         reply: response.data[0].translations[0].text,
+  //         time: item.time
+  //       }
+
+  //       return retObj;
+  //       // console.log("Translator response: ",response.data[0].translations[0].text);
+  //      })
+  //    // console.log("Translated language: ",)
+
+  //    const fin = await Promise.all(final);
+  //     setMessages(fin);
+
+  //     console.log("Final,", final);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const getSessionQuestionAnswers = async () => {
     // let sessionId=localStorage.getItem('sessionId')
@@ -197,9 +267,18 @@ const Chat = () => {
     
     getUserSession();
     getSessionQuestionAnswers();
-    translateData()
+   // translateData()
     
   }, []);
+
+  useEffect(()=>{
+      if(selectedLanguage=='en'){
+        getSessionQuestionAnswers()
+      }
+      else{
+        // getSessionQuestionAnswers1()
+      }
+  },[selectedLanguage])
 
   useEffect(() => {
     // Scroll to the bottom of the chat when new messages are added
@@ -208,7 +287,18 @@ const Chat = () => {
   }, [messages]);
 
   return (
+
     <div className="bg-bg-light">
+      <div>
+        <h2>Select Language:</h2>
+        <select value={selectedLanguage} onChange={handleLanguageChange}>
+          {languages.map((language) => (
+            <option key={language.code} value={language.code}>
+              {language.name}
+            </option>
+          ))}
+        </select>
+      </div>
       <h1 className="pl-24 text-3xl mb-6 mt-6 font-serif font-semibold">
         Welcome {displayname}
       </h1>
