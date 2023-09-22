@@ -17,16 +17,18 @@ export default function App() {
         <Header />
         <BrowserRouter>
         <Routes>
-        <Route exact path="/" element={<Home/>} />
+        <Route exact path="/" element={<SignIn/>} />
         <Route exact path="/upload" element={<Upload/>} />
         <Route exact path="/gawareness" element={<Gawareness/>} />
-        {/* <Home/> */}
-        {/* <Upload /> */}
-        {/* <Neroutput/> */}
-        {/* <Successrate/> */}
+
+
+
+
+        <Route exact path="/ner" element={<Neroutput/>}/>
+        <Route exact path="/successrate" element={<Successrate/>}/>
         <Route exact path="/chat/:userId" element={<Chat/>} />
         {/* <Login/> */}
-        <Route exact path="/login" element={<SignIn/>}/>
+        <Route exact path="/home" element={<Home/>}/>
         {/* <SignIn/> */}
         </Routes>
         </BrowserRouter>
