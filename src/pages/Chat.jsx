@@ -4,6 +4,7 @@ import PrevSession from "../components/PrevSession";
 import { getAuth } from "firebase/auth";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { translate } from '@vitalets/google-translate-api';
 
 const Chat = () => {
   const [input, setInput] = useState("");
@@ -121,11 +122,19 @@ const Chat = () => {
     }
   };
 
+  const translateLanguage=async()=>{
+    const { text } = await translate('Привет, мир! Как дела?', { to:'en' });
+
+   console.log(text)
+  }
+
   useEffect(() => {
     // creating a new chat session
     // createNewSession();
+    
     getUserSession();
     getSessionQuestionAnswers();
+    
   }, []);
 
   useEffect(() => {
