@@ -140,7 +140,7 @@ const Chat = () => {
           <button className="border border-slate-400 p-2 text-white rounded-lg" onClick={createNewSession}>New Chat</button>
           {userSessions.map((userSession, index) => (
             <button onClick={()=>handleSessionClick(userSession._id)}>
-              <PrevSession sessionname={userSession.sessionName} />
+              <PrevSession sessionname={userSession.sessionName} sessionId={userSession._id} />
             </button>
           ))}
         </div>
