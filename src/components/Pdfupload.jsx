@@ -41,7 +41,8 @@ function Pdfupload({setPetitionId}) {
     }
   
     return (
-      <div className="flex flex-col w-full bg-bg-light items-center justify-center p-10">
+      
+        <div className="flex flex-col w-full  bg-bg-light items-center justify-center p-10 border border-slate-500">
         <h1 className="text-2xl font-bold mb-4 font-serif">Upload a PDF</h1>
         <input
           type="file"
@@ -67,6 +68,8 @@ function Pdfupload({setPetitionId}) {
             />
           )}
       </div>
+
+      
   );
 }
 
