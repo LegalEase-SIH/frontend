@@ -1,11 +1,20 @@
 import { useState } from "react";
 import { BiEditAlt,BiCheck } from "react-icons/bi";
+import axios from "axios"
 
-export default function PrevSession({ sessionname }) {
+export default function PrevSession({ sessionname,sessionId }) {
   const [editMode, setEditMode] = useState(false);
   const [sname, setSessionname] = useState('Your Initial Text');
+
+  const hanldeNameChange=async()=>{
+    const obj={"sessionName":sname}
+    await axios.put(`http://localhost:8000/api/session/sessionName/${sessionId}`,obj)
+    console.log("Name changed")
+  }
   const handleEditClick = () => {
     setEditMode(!editMode);
+    hanldeNameChange()
+   
   };
 
   const handleContentChange = (e) => {
