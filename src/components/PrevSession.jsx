@@ -1,9 +1,13 @@
+import { BiEditAlt } from "react-icons/bi";
+
 export default function PrevSession({ sessionname }) {
   return (
-    <div>
-      <h1 className="flex justify-center items-center text-lg font-semibold text-white h-10 pl-24 pr-24 border border-slate-500 rounded-lg mb-5 p-2">
+    <div className="flex justify-between space-x-4 rounded-lg   border border-slate-500 h-10 p-3 items-center">
+      <h1 className="text-lg font-semibold text-white    rounded-lg  ">
         {sessionname}
-      </h1>
+        </h1>
+        <BiEditAlt size={20} className="text-white"/>
+      
     </div>
   );
 }

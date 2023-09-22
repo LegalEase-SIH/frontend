@@ -136,7 +136,7 @@ const Chat = () => {
   return (
     <div className="flex justify-center bg-bg-light  h-screen">
       <div className="bg-bg-font">
-        <div className="flex flex-col p-8">
+        <div className="flex flex-col p-8 space-y-5 ">
           <button className="border border-slate-400 p-2 text-white rounded-lg" onClick={createNewSession}>New Chat</button>
           {userSessions.map((userSession, index) => (
             <button onClick={()=>handleSessionClick(userSession._id)}>
