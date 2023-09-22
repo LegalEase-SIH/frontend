@@ -16,6 +16,11 @@ export default function Successrate() {
           <AiOutlineHome size={28} />
           <h1 className="text-2xl font-bold font-serif">Home</h1>
         </div></Link>
+        <Link to={`/previouspetitions`}>
+        <div className="border-slate-400 p-4 rounded-2xl border-4 flex justify-center items-center space-x-4">
+          <AiOutlineHome size={28} />
+          <h1 className="text-2xl font-bold font-serif">Previous Petitions</h1>
+        </div></Link>
       </div>
       <div className="flex flex-col justify-between pl-40 pr-40 items-center bg-bg-light h-screen pb-12 space-y-10">
         <h1 className="text-3xl font-bold text-bg-font font-serif ">
