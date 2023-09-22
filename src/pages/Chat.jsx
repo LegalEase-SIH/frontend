@@ -10,15 +10,19 @@ const Chat = () => {
   const [messages, setMessages] = useState([
     { text: "Hello, how can I assist you?", sender: "bot" },
   ]);
-  
-  let { userId } = useParams();
-  
-  // let latestSessionId;
-  const displayname=localStorage.getItem('name')
-  console.log("Name of the user: ",displayname)
+  const [userSessions, setUserSessions] = useState([{
+    "_id": "",
+    "sessionName": ""
+  }])
 
-  const userPhotoUrl=localStorage.getItem('photoUrl')
-  console.log("User photo Url: ",userPhotoUrl)
+  let { userId } = useParams();
+
+  // let latestSessionId;
+  const displayname = localStorage.getItem('name')
+  console.log("Name of the user: ", displayname)
+
+  const userPhotoUrl = localStorage.getItem('photoUrl')
+  console.log("User photo Url: ", userPhotoUrl)
 
 
 
@@ -39,23 +43,24 @@ const Chat = () => {
       console.log(res)
 
       // fetching the user chats from the database
-      const res1=await axios.get(`http://localhost:8000/api/session/${sessionId}`)
-      console.log("current session: ",res1.data.chats)
+      const res1 = await axios.get(`http://localhost:8000/api/session/${sessionId}`)
+      console.log("current session: ", res1.data.chats)
       setMessages(res1.data.chats)
-      
+      setInput("")
+
     }
     catch (err) {
       console.log(err)
     }
   };
 
-  const getSessionQuestionAnswers=async()=>{
-    try{
-      const res=await axios.get(`http://localhost:8000/api/session/${sessionId}`)
-      console.log("current session: ",res.data.chats)
+  const getSessionQuestionAnswers = async () => {
+    try {
+      const res = await axios.get(`http://localhost:8000/api/session/${sessionId}`)
+      console.log("current session: ", res.data.chats)
       setMessages(res.data.chats)
     }
-    catch(err){
+    catch (err) {
       console.log(err)
     }
   }
@@ -74,9 +79,12 @@ const Chat = () => {
   const getUserSession = async () => {
     try {
       const res = await axios.get(`http://localhost:8000/api/session/user/${userId}`)
-      
+      // console.log("User sessions: ",res.data.slice(-6))
+      const prevUserSessions = res.data.slice(-6)
+      setUserSessions(prevUserSessions)
+      console.log("userSessions: ", userSessions)
       const latestSessionId = res.data[res.data.length - 1]._id
-       setSessionId(latestSessionId)
+      setSessionId(latestSessionId)
       // console.log("Session-Id: ",latestSessionId)
     }
     catch (err) {
@@ -103,9 +111,12 @@ const Chat = () => {
 
   return (
     <div className="flex justify-center bg-bg-light items-start h-screen">
-      <div className=" bg-bg-light  p-4 w-1/4 ">
-        <PrevSession sessionname={"session1"} />
-      </div>
+      {userSessions.map((userSession, index) => (
+        <div className=" bg-bg-light  p-4 w-1/4 ">
+          <PrevSession sessionname={userSession.sessionName} />
+        </div>
+      ))}
+
       <div className=" bg-bg-light p-4 w-3/4">
         <div
           id="chat-container"
