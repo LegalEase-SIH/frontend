@@ -52,7 +52,7 @@ export default function Successrate() {
           Successrate Result
         </h1>
         <div className="flex  justify-between items-center space-x-56  ">
-          <Percentagecircle percentage={successRate*100} />
+          <Percentagecircle percentage={(successRate)*100} />
           <div className="flex flex-col bg-bg-box p-6 rounded-lg w-2/5 ">
             <h1 className="font-semibold font-serif">How to increase the success rate?</h1>
             <li className="font-serif">
