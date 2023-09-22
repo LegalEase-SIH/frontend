@@ -6,15 +6,25 @@ import { useParams } from "react-router-dom";
 
 const Chat = () => {
   const [input, setInput] = useState("");
-  const [sessionId, setSessionId] = useState("650b381d25089f056a103a78")
+  const [sessionId, setSessionId] = useState("")
   const [messages, setMessages] = useState([
     { text: "Hello, how can I assist you?", sender: "bot" },
   ]);
+  const [userSessions, setUserSessions] = useState([{
+    "_id": "",
+    "sessionName": ""
+  }])
 
   let { userId } = useParams();
-  console.log(userId)
 
-  let latestSessionId;
+  // let latestSessionId;
+  const displayname = localStorage.getItem('name')
+  console.log("Name of the user: ", displayname)
+
+  const userPhotoUrl = localStorage.getItem('photoUrl')
+  console.log("User photo Url: ", userPhotoUrl)
+
+
 
 
   const handleSubmit = async (e) => {
@@ -27,21 +37,30 @@ const Chat = () => {
         'question': input
       }
       console.log("Session-Id: ", sessionId)
+
+      // putting the user question into the database 
       const res = await axios.put(`http://localhost:8000/api/session/${sessionId}`, ques)
       console.log(res)
+
+      // fetching the user chats from the database
+      const res1 = await axios.get(`http://localhost:8000/api/session/${sessionId}`)
+      console.log("current session: ", res1.data.chats)
+      setMessages(res1.data.chats)
+      setInput("")
+
     }
     catch (err) {
       console.log(err)
     }
   };
 
-  const getSessionQuestionAnswers=async()=>{
-    try{
-      const res=await axios.get(`http://localhost:8000/api/session/${sessionId}`)
-      console.log("current session: ",res.data.chats)
+  const getSessionQuestionAnswers = async () => {
+    try {
+      const res = await axios.get(`http://localhost:8000/api/session/${sessionId}`)
+      console.log("current session: ", res.data.chats)
       setMessages(res.data.chats)
     }
-    catch(err){
+    catch (err) {
       console.log(err)
     }
   }
@@ -60,8 +79,12 @@ const Chat = () => {
   const getUserSession = async () => {
     try {
       const res = await axios.get(`http://localhost:8000/api/session/user/${userId}`)
-      latestSessionId = res.data[res.data.length - 1]._id
-      // setSessionId(latestSessionId)
+      // console.log("User sessions: ",res.data.slice(-6))
+      const prevUserSessions = res.data.slice(-6)
+      setUserSessions(prevUserSessions)
+      console.log("userSessions: ", userSessions)
+      const latestSessionId = res.data[res.data.length - 1]._id
+      setSessionId(latestSessionId)
       // console.log("Session-Id: ",latestSessionId)
     }
     catch (err) {
@@ -88,9 +111,12 @@ const Chat = () => {
 
   return (
     <div className="flex justify-center bg-bg-light items-start h-screen">
-      <div className=" bg-bg-light  p-4 w-1/4 ">
-        <PrevSession sessionname={"session1"} />
-      </div>
+      {userSessions.map((userSession, index) => (
+        <div className=" bg-bg-light  p-4 w-1/4 ">
+          <PrevSession sessionname={userSession.sessionName} />
+        </div>
+      ))}
+
       <div className=" bg-bg-light p-4 w-3/4">
         <div
           id="chat-container"

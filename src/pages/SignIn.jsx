@@ -26,7 +26,10 @@ export default function SignIn() {
         let userId
         auth.onAuthStateChanged((user)=>{
             if(user){
-                console.log("userId: ",user.uid)
+                console.log("user: ",user.displayName)
+                console.log("Photr url: ",user.photoURL)
+                localStorage.setItem('name',user.displayName)
+                localStorage.setItem('photoUrl',user.photoURL)
                 userId=user.uid
               
             }
