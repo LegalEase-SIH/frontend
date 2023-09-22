@@ -16,6 +16,7 @@ export default function SignIn() {
             //  console.log(result);
              getAuth().currentUser.getIdToken().then(function(idToken){
                console.log(idToken)
+               localStorage.setItem("accessToken", idToken);
     
                navigate("/home")
              })
