@@ -3,11 +3,11 @@ import React from 'react';
 
 function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-300 py-6 p-3">
+    <footer className="bg-gray-900 text-gray-300 py-6 p-3 shadow-lg">
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
-            <h2 className="text-2xl font-semibold">Government of India</h2>
+            <h2 className="text-lg font-semibold">Government of India</h2>
             <p className="text-sm">Ministry of Electronics & Information Technology, Government of India</p>
             <p className="text-sm">Developed and hosted by National Informatics Centre,</p>
             <p className="text-sm">Content Owned by LEGISLATIVE DEPARTMENT, Ministry of Law and Justice, GOI</p>
