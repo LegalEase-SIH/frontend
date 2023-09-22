@@ -2,7 +2,8 @@ import axios from 'axios';
 import { getAuth } from 'firebase/auth';
 import React, { useState } from 'react';
 
-function Pdfupload() {
+import { BsFillCloudArrowUpFill } from "react-icons/bs";
+function Pdfupload({setPetitionId}) {
     const [selectedPdf, setSelectedPdf] = useState(null);
 
     const handleFileChange = (e) => {
@@ -26,6 +27,8 @@ function Pdfupload() {
         localStorage.setItem("petitionId", petitionId);
         localStorage.setItem("url", url);
 
+        setPetitionId(petitionId);
+
         alert("File uploaded successfully")
       } catch(err) {
         console.log(err);
@@ -34,7 +37,7 @@ function Pdfupload() {
     }
   
     return (
-      <div className="flex flex-col w-full items-center justify-center p-10">
+      <div className="flex flex-col w-full bg-bg-light items-center justify-center p-10">
         <h1 className="text-2xl font-bold mb-4 font-serif">Upload a PDF</h1>
         <input
           type="file"
@@ -42,7 +45,8 @@ function Pdfupload() {
           onChange={handleFileChange}
           className="mb-4"
         />
-        <button onClick={() => handleUpload()}>Upload PDF</button>
+        
+        <button className='flex items-center border space-x-2  font-medium border-slate-500 p-3 rounded-lg' onClick={() => handleUpload() }><BsFillCloudArrowUpFill/><div>Upload PDF</div></button>
         {selectedPdf && (
           <div>
             <h2 className="text-xl font-semibold mb-2 font-serif">Selected PDF:</h2>

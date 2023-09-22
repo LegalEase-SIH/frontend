@@ -5,7 +5,7 @@ import { GrLinkNext } from "react-icons/gr";
 export default function Petitiontemplate({ petition_id, percentage }) {
   return (
     <div className="flex justify-between items-center h-16 w-4/5 bg-bg-box rounded-lg p-4">
-      <div className='font-serif text-xl '>
+      <div className='font-sans text-xl '>
         ID: {petition_id}
       </div>
       <div className='flex space-x-8 items-center '>
