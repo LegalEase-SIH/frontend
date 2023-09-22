@@ -18,6 +18,9 @@ const Chat = () => {
     },
   ]);
 
+  const date = new Date();
+  const showTime = date.getHours()
+      + ':' + date.getMinutes()
   let { userId } = useParams();
 
   // let latestSessionId;
@@ -176,7 +179,7 @@ const Chat = () => {
                       className="w-6 h-6 rounded-lg "
                     />
                   </div>
-                  <h1 className="flex justify-end h-4 text-xs">time</h1>
+                  <h1 className="flex justify-end h-4 text-xs">{showTime}</h1>
                 </div>
 
                 <div
