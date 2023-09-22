@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 export default function Upload() {
   return (
     <>
-      
-
       <Pdfupload />
       <div className="flex justify-between pr-28 pl-28 pb-10 pt-14">
         <Link to={`/ner`}>
