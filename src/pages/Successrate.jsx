@@ -7,7 +7,7 @@ import axios from "axios";
 export default function Successrate() {
 
   const [petitionId,setPetitionId]=useState(localStorage.getItem('petitionId'))
-  const [successRate,setSuccessRate]=useState()
+  const [successRate,setSuccessRate]=useState(0)
 
   const fetchSuccessRate=async()=>{
   
