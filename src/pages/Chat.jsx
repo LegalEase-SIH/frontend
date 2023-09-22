@@ -288,10 +288,14 @@ const Chat = () => {
 
   return (
 
-    <div className="bg-bg-light">
-      <div>
-        <h2>Select Language:</h2>
-        <select value={selectedLanguage} onChange={handleLanguageChange}>
+    <div className="bg-bg-light pb-3  ">
+      <div className="flex items-center justify-between">
+      <h1 className="pl-24 text-3xl mb-6 mt-6 font-serif font-semibold">
+        Welcome {displayname}
+      </h1>
+      <div className="flex pr-24 space-x-2">
+      <h2 className="font-serif text-lg font-semibold">Select Language: </h2>
+        <select value={selectedLanguage} onChange={handleLanguageChange} className="rounded-lg">
           {languages.map((language) => (
             <option key={language.code} value={language.code}>
               {language.name}
@@ -299,9 +303,9 @@ const Chat = () => {
           ))}
         </select>
       </div>
-      <h1 className="pl-24 text-3xl mb-6 mt-6 font-serif font-semibold">
-        Welcome {displayname}
-      </h1>
+        
+      </div>
+      
 
       <div className="flex justify-center bg-bg-light  h-0.9">
         <div className="bg-bg-font">

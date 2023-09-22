@@ -1,6 +1,7 @@
 import Percentagecircle from "../components/Percentagecircle";
 import { BiArrowBack } from "react-icons/bi";
 import { AiOutlineHome } from "react-icons/ai";
+import { ImPrevious } from "react-icons/im";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -32,18 +33,18 @@ export default function Successrate() {
     <>
       <div className="flex justify-between pr-28 pl-28 bg-bg-light pt-10 pb-8">
       <Link to={`/upload`}>
-        <div className="border-slate-400 p-4 rounded-2xl border-4 flex justify-center items-center space-x-4">
+        <div className="border-slate-400 p-4 rounded-2xl border-4 flex justify-center items-center space-x-4 hover:scale-105">
           <BiArrowBack size={28} />
           <h1 className="text-2xl font-bold font-serif">Back</h1>
         </div></Link>
         <Link to={`/home`}>
-        <div className="border-slate-400 p-4 rounded-2xl border-4 flex justify-center items-center space-x-4">
+        <div className="border-slate-400 p-4 rounded-2xl border-4 flex justify-center items-center space-x-4 hover:scale-105">
           <AiOutlineHome size={28} />
           <h1 className="text-2xl font-bold font-serif">Home</h1>
         </div></Link>
         <Link to={`/previouspetitions`}>
-        <div className="border-slate-400 p-4 rounded-2xl border-4 flex justify-center items-center space-x-4">
-          <AiOutlineHome size={28} />
+        <div className="border-slate-400 p-4 rounded-2xl border-4 flex justify-center items-center space-x-4 hover:scale-105">
+          <ImPrevious size={28} />
           <h1 className="text-2xl font-bold font-serif">Previous Petitions</h1>
         </div></Link>
       </div>
@@ -53,7 +54,7 @@ export default function Successrate() {
         </h1>
         <div className="flex  justify-between items-center space-x-56  ">
           <Percentagecircle percentage={(successRate)*100} />
-          <div className="flex flex-col bg-bg-box p-6 rounded-lg w-2/5 ">
+          <div className="flex flex-col bg-bg-box p-6 rounded-lg w-2/5 shadow-lg shadow-black">
             <h1 className="font-semibold font-serif">How to increase the success rate?</h1>
             <li className="font-serif">
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ullam
