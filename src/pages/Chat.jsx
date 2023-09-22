@@ -41,13 +41,23 @@ const Chat = () => {
       // putting the user question into the database
       const res = await axios.put(
         `http://localhost:8000/api/session/${sessionId}`,
-        ques
+        ques,
+        {
+          headers:{
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+          }
+        }
       );
       // console.log(res);
 
       // fetching the user chats from the database
       const res1 = await axios.get(
-        `http://localhost:8000/api/session/${sessionId}`
+        `http://localhost:8000/api/session/${sessionId}`,
+        {
+          headers:{
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+          }
+        }
       );
       // console.log("current session: ", res1.data.chats);
       setMessages(res1.data.chats);
@@ -61,7 +71,12 @@ const Chat = () => {
     // let sessionId=localStorage.getItem('sessionId')
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/session/${sessionId}`
+        `http://localhost:8000/api/session/${sessionId}`,
+        {
+          headers:{
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+          }
+        }
       );
       // console.log("current session: ", res.data.chats);
       setMessages(res.data.chats);
@@ -78,7 +93,12 @@ const Chat = () => {
 
     const res = await axios.post(
       "http://localhost:8000/api/session",
-      newSession
+      newSession,
+      {
+        headers:{
+          "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+        }
+      }
     );
     // console.log("Create new session clicked")
     // console.log(res);
@@ -87,7 +107,12 @@ const Chat = () => {
   const getUserSession = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/session/user/${userId}`
+        `http://localhost:8000/api/session/user/${userId}`,
+        {
+          headers:{
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+          }
+        }
       );
       // console.log("Length of user sessions: ",res.data.length)
       // console.log("User sessions: ",res.data.slice(-6))
@@ -109,7 +134,12 @@ const Chat = () => {
 
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/session/${sessionId}`
+        `http://localhost:8000/api/session/${sessionId}`,
+        {
+          headers:{
+            "Authorization": "Bearer " + localStorage.getItem("accessToken"),
+          }
+        }
       );
       // console.log("current session: ", res.data.chats);
       setMessages(res.data.chats);
