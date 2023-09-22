@@ -31,6 +31,36 @@ const Chat = () => {
 
   console.log(sessionId);
 
+  const options = {
+    method: 'POST',
+    url: 'https://microsoft-translator-text.p.rapidapi.com/translate',
+    params: {
+      'to[0]': 'hi',
+      'api-version': '3.0',
+      profanityAction: 'NoAction',
+      textType: 'plain'
+    },
+    headers: {
+      'content-type': 'application/json',
+      'X-RapidAPI-Key': 'b04d6f82bfmsha28287883c823d7p145b2bjsn47ca82720e93',
+      'X-RapidAPI-Host': 'microsoft-translator-text.p.rapidapi.com'
+    },
+    data: [
+      {
+        Text: 'I would really like to drive your car around the block a few times.'
+      }
+    ]
+  };
+  
+ const translateData=async()=>{
+  try {
+    const response = await axios.request(options);
+    console.log("Translator response: ",response.data);
+  } catch (error) {
+    console.error(error);
+  }
+ }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     sessionId = localStorage.getItem("sessionId");
@@ -159,12 +189,15 @@ const Chat = () => {
    console.log(text)
   }
 
+  
+
   useEffect(() => {
     // creating a new chat session
     // createNewSession();
     
     getUserSession();
     getSessionQuestionAnswers();
+    translateData()
     
   }, []);
 
