@@ -1,4 +1,3 @@
-import { LocalHospital } from '@mui/icons-material';
 import axios from 'axios';
 import { getAuth } from 'firebase/auth';
 import React, { useState } from 'react';
@@ -12,8 +11,6 @@ function Pdfupload() {
     };
 
     const handleUpload = async () => {
-      console.log("Uploading file");
-
       const userId = getAuth().currentUser.uid;
       try {
         const formData = new FormData();
