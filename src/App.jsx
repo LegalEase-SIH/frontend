@@ -13,8 +13,9 @@ import PreviousPetitions from "./pages/PreviousPetitions";
 export default function App() {
   return (
     <>
-      <Header />
+      
         <div className="flex h-screen justify-between flex-col">
+        <Header />
           <BrowserRouter>
             <Routes>
               <Route exact path="/" element={<SignIn />} />
@@ -30,9 +31,10 @@ export default function App() {
               {/* <SignIn/> */}
             </Routes>
           </BrowserRouter>
-        </div>
+        
 
       <Footer />
+      </div>
     </>
   );
 }
