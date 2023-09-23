@@ -100,7 +100,7 @@ export default function Neroutput() {
       <h1 className="text-3xl font-bold text-bg-font underline ">
         Named entity recognition Result
       </h1>
-      <div className="flex  justify-between mt-5 mb-5">
+      <div className="flex m-3 space-x-2 justify-between mt-5 mb-5">
         {witness.length !== 0 && <NerContainer
           WITNESS={witness}
         />}
