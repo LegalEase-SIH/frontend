@@ -77,6 +77,16 @@ const Chat = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     sessionId = localStorage.getItem("sessionId");
+    
+    // console.log("CHAT SESSION: ",messages)
+    // const inputFormat={
+    //   "userQuestion":input,
+    //   "chats":messages
+    // }
+
+    // // fetching the reply to the question
+    // const resReply=await axios.post('http://d645-35-204-1-76.ngrok-free.app/ml/chat/openai',inputFormat)
+    // console.log("Reply input: ",resReply)
 
     try {
       const ques = {
@@ -84,6 +94,8 @@ const Chat = () => {
         question: input,
       };
       // console.log("Session-Id: ", sessionId);
+
+      
 
       // putting the user question into the database
       const res = await axios.put(

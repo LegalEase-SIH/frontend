@@ -7,12 +7,14 @@ import { useNavigate } from "react-router-dom";
 export default function PreviousPetitions() {
 
   const [petitions,setPetitions]=useState([{}])
-  console.log("Petition data: ",petitions)
+ // console.log("Petition data: ",petitions)
   const navigate=useNavigate()
 
   const fetchPreviousPetitions=async()=>{
+    console.log("previous petitions: ")
     try{
        const userId=getAuth().currentUser.uid
+       console.log("userId: ",userId)
        const res=await axios.get(`http://localhost:8000/api/user/${userId}/petition`,
        {
         headers:{
@@ -20,8 +22,9 @@ export default function PreviousPetitions() {
         }
       }
        )
-
+       console.log(res.data)
        setPetitions(res.data)
+       
     }
     catch(err){
       console.log(err)
@@ -48,9 +51,9 @@ export default function PreviousPetitions() {
       </h1>
 
      {petitions.map((petition,index)=>(
-      //<button onClick={()=>handleSubmit(petition._id)}>
+      <button onClick={()=>handleSubmit(petition._id)}>
        <Petitiontemplate petition_id={petition._id.slice(0,5)} percentage={petition.successRate}/>
-     //  </button>
+       </button>
      ))}
      
       
